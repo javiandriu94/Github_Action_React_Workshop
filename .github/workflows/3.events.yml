@@ -1,0 +1,24 @@
+name: Events Deep dive
+on:
+  pull_request:
+    types:
+      - opened
+  workflow_dispatch:
+jobs:
+  jobs:
+    deploy:
+      runs-on: ubuntu-lastes
+      steps:
+        - name: Output event data
+          run: echo "${{toJSON(github.event)}}"
+        - name: Get code
+          run: actions/checkout@v3
+        - name: Install dependencies
+          run:  npm ci
+        - name: Test code
+          run: npm run test
+        - name: Build code
+          run:  npm run build
+        - name: Deploy
+          run: echo "Deploying..."
+
